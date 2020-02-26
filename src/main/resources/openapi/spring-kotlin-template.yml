@@ -1,0 +1,7 @@
+openapi: 3.0.2
+info:
+  title: Spring Kotlin Template API
+  description: It is a template configuration from spring boot using kotlin language applications
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080

@@ -1,2 +1,4 @@
-# spring-kotlin-template
-Spring boot kotlin template
+### Kotlin Spring Template
+
+* [Documentação da API (local via Swagger)](http://localhost:8080/docs/index.html)
+

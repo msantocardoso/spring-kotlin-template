@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: spring-kotlin-template
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/spring-kotlin-template"
+    username: spring-kotlin-template
+    password: root
+  hikari:
+    connectionTimeout: 20000
+    maximumPoolSize: 5
+
+logentries:
+  token: ~
+
+management:
+  endpoints:
+    web:
+      base-path: ~

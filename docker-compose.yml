@@ -1,0 +1,52 @@
+version: '3.7'
+
+services:
+  database:
+    image: "postgres:11.2"
+    container_name: postgres
+    hostname: spring-kotlin-template
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=spring-kotlin-template
+      - POSTGRES_MULTIPLE_DATABASES=spring-kotlin-template,spring-kotlin-template_test
+    volumes:
+      - ./scripts/postgres-multiple-databases.sh:/docker-entrypoint-initdb.d/postgres-multiple-databases.sh
+      - postgres:/var/lib/spring-kotlin-template/data
+
+  spring-kotlin-template:
+    build:
+      context: .
+    image: repo/spring-kotlin-template
+    hostname: spring-kotlin-template
+    ports:
+      - "8080:8080"
+    init: true
+    depends_on:
+      - database
+      - data_platform
+    environment:
+      - "DATABASE_URL=jdbc:postgresql://db:5432/spring-kotlin-template?user=spring-kotlin-template"
+
+  data_platform:
+    container_name: data_platform
+    image: "lensesio/fast-data-dev"
+    ports:
+      - "9092:9092"
+      - "8081:8081"
+      - "8082:8082"
+      - "8083:8083"
+      - "2181:2181"
+      - "3030:3030"
+      - "9001:9001"
+    environment:
+      - "SAMPLEDATA=0"
+      - "RUNNING_SAMPLEDATA=0"
+      - "RUNTESTS=0"
+      - "DISABLE_JMX=1"
+      - "SUPERVISORWEB=1"
+      - "ADV_HOST=127.0.0.1"
+
+volumes:
+  postgres:
